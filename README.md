@@ -2,6 +2,9 @@
 
 CesiumJS(WebGIS) 환경에서 볼류메트릭 비디오(Volumetric Video/Animated GLB) 기술 적용 검토   
 
+!['예시'](https://github.com/thlee33/volumetric_gltf/blob/main/example.png)   
+
+
 1. 프로젝트 개요
   - 목적: 3D 가우시안 스플래팅 및 볼류메트릭 기술의 디지털 트윈 서비스 적용 가능성 검토
   - 기술: CesiumJS, Volumetric Video(glTF/GLB Animation)
