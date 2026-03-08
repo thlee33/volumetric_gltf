@@ -49,7 +49,7 @@
           orientation: orientation,
           model: {
             uri: resource,
-            minimumPixelSize: 1000,
+            minimumPixelSize: 200,
             runAnimations: true,
             heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
           },
@@ -58,8 +58,8 @@
         // 5. 카메라 이동 및 로딩 메시지 제거
         await viewer.zoomTo(entity, new Cesium.HeadingPitchRange(
           Cesium.Math.toRadians(0),
-          Cesium.Math.toRadians(-5),
-          250.0
+          Cesium.Math.toRadians(-1),
+          350.0
         ));
         
         viewer.trackedEntity = entity;
@@ -76,4 +76,5 @@
 </body>
 
 </html>
+
 
