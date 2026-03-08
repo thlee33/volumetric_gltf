@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+    #loadingOverlay {
+      position: absolute; bottom: 40px; left: 40px; color: white;
+      background: rgba(0,0,0,0.5); padding: 10px; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loadingOverlay">데이터 로딩 중...</div>
+
+  <script type="module">
+    // 1. 액세스 토큰 설정
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMmYyMTg2MC05MmEzLTQ5M2ItYTRhMS02MjVlYzZlMTA3N2UiLCJpZCI6MzA1NywiaWF0IjoxNzA3OTg4NDM2fQ.ueW30N6i7eC3Byxs7v0EhZqvSBd2o6TQPoNV2FCOnxM";
+
+    const viewer = new Cesium.Viewer("cesiumContainer", {
+      terrainProvider: await Cesium.createWorldTerrainAsync(),
+      animation: true,
+      timeline: true,
+    });
+
+    async function addVolumetricModel() {
+      try {
+        // 2. 3D 빌딩 레이어 추가
+        const buildings = await Cesium.createOsmBuildingsAsync();
+        viewer.scene.primitives.add(buildings);
+
+        // 3. 광화문 좌표 설정 (지위고달 반영)
+        const position = Cesium.Cartesian3.fromDegrees(126.9768, 37.5759, 0);
+        
+        const hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+        const orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+
+        // 4. 세슘 이온 에셋 로드 (ID: 4511749)
+        const resource = await Cesium.IonResource.fromAssetId(4511749);
+
+        const entity = viewer.entities.add({
+          name: "광화문 볼류메트릭",
+          position: position,
+          orientation: orientation,
+          model: {
+            uri: resource,
+            minimumPixelSize: 100,
+            runAnimations: true,
+            heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+          },
+        });
+
+        // 5. 카메라 이동 및 로딩 메시지 제거
+        await viewer.zoomTo(entity, new Cesium.HeadingPitchRange(
+          Cesium.Math.toRadians(0),
+          Cesium.Math.toRadians(-15),
+          50.0
+        ));
+        
+        viewer.trackedEntity = entity;
+        document.getElementById('loadingOverlay').style.display = 'none';
+
+      } catch (error) {
+        console.error("에러 발생:", error);
+        document.getElementById('loadingOverlay').innerHTML = "에러: 에셋 로드 실패 (404/Token)";
+      }
+    }
+
+    addVolumetricModel();
+  </script>
+</body>
+</html>
