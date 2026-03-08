@@ -31,8 +31,8 @@
     async function addVolumetricModel() {
       try {
         // 2. 3D 빌딩 레이어 추가
-        const buildings = await Cesium.createOsmBuildingsAsync();
-        viewer.scene.primitives.add(buildings);
+        //const buildings = await Cesium.createOsmBuildingsAsync();
+        //viewer.scene.primitives.add(buildings);
 
         // 3. 광화문 좌표 설정 (지위고달 반영)
         const position = Cesium.Cartesian3.fromDegrees(126.9768, 37.5759, 0);
@@ -74,4 +74,5 @@
     addVolumetricModel();
   </script>
 </body>
+
 </html>
