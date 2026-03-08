@@ -49,7 +49,7 @@
           orientation: orientation,
           model: {
             uri: resource,
-            minimumPixelSize: 200,
+            minimumPixelSize: 100,
             runAnimations: true,
             heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
           },
@@ -59,7 +59,7 @@
         await viewer.zoomTo(entity, new Cesium.HeadingPitchRange(
           Cesium.Math.toRadians(0),
           Cesium.Math.toRadians(-1),
-          350.0
+          20.0
         ));
         
         viewer.trackedEntity = entity;
@@ -76,5 +76,6 @@
 </body>
 
 </html>
+
 
 
