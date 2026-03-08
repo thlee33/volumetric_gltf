@@ -34,7 +34,7 @@
         //const buildings = await Cesium.createOsmBuildingsAsync();
         //viewer.scene.primitives.add(buildings);
 
-        // 3. 광화문 좌표 설정 (지위고달 반영)
+        // 3. 광화문 좌표 설정 
         const position = Cesium.Cartesian3.fromDegrees(126.9768, 37.5759, 0);
         
         const hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
@@ -49,7 +49,7 @@
           orientation: orientation,
           model: {
             uri: resource,
-            minimumPixelSize: 100,
+            minimumPixelSize: 1000,
             runAnimations: true,
             heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
           },
@@ -58,8 +58,8 @@
         // 5. 카메라 이동 및 로딩 메시지 제거
         await viewer.zoomTo(entity, new Cesium.HeadingPitchRange(
           Cesium.Math.toRadians(0),
-          Cesium.Math.toRadians(-15),
-          50.0
+          Cesium.Math.toRadians(-5),
+          250.0
         ));
         
         viewer.trackedEntity = entity;
@@ -76,3 +76,4 @@
 </body>
 
 </html>
+
